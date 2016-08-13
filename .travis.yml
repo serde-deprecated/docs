@@ -21,7 +21,7 @@ script:
 
 after_success:
   - echo docs.serde.rs > target/doc/CNAME
-  - echo '<meta http-equiv=refresh content=0;url="http://docs.serde.rs/serde/">' > target/doc/index.html
+  - mv Cargo.dummy.toml Cargo.toml
   - travis-cargo doc-upload
 
 env:

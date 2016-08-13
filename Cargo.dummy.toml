@@ -1,0 +1,9 @@
+# Travis-cargo looks at the crate name to redirect index.html to
+# the main crate. We want the main crate to be Serde so here it is.
+# We build docs with a different crate name (serde_docs) so that
+# cargo builds docs for the real Serde rather than this dummy crate.
+
+[package]
+name = "serde"
+version = "0.1.0"
+authors = ["David Tolnay <dtolnay@gmail.com>"]
