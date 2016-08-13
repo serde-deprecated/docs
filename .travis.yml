@@ -1,0 +1,30 @@
+sudo: false
+
+language: rust
+
+rust:
+  - nightly
+
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+
+before_script:
+  - pip install 'travis-cargo<0.2' --user
+  - export PATH=$HOME/.local/bin:$PATH
+
+script:
+  - travis-cargo doc
+
+after_success:
+  - echo docs.serde.rs > target/doc/CNAME
+  - echo '<meta http-equiv=refresh content=0;url="http://docs.serde.rs/serde/">' > target/doc/index.html
+  - travis-cargo doc-upload
+
+env:
+  global:
+    - TRAVIS_CARGO_NIGHTLY_FEATURE=""
+    - secure: TODO
