@@ -20,7 +20,6 @@ script:
   - travis-cargo doc
 
 after_success:
-  - echo docs.serde.rs > target/doc/CNAME
   - mv Cargo.dummy.toml Cargo.toml
   - travis-cargo doc-upload
 
