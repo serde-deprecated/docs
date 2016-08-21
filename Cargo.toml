@@ -5,6 +5,7 @@ authors = ["David Tolnay <dtolnay@gmail.com>"]
 
 [dependencies]
 aster = "*"
+erased-serde = "*"
 quasi = "*"
 serde = "*"
 serde_json = "*"
