@@ -17,7 +17,7 @@ before_script:
   - export PATH=$HOME/.local/bin:$PATH
 
 script:
-  - travis-cargo doc
+  - RUSTDOC=./rustdoc travis-cargo doc
 
 after_success:
   - mv Cargo.dummy.toml Cargo.toml
