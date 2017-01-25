@@ -4,9 +4,7 @@ version = "0.1.0"
 authors = ["David Tolnay <dtolnay@gmail.com>"]
 
 [dependencies]
-aster = "*"
 erased-serde = "*"
-quasi = "*"
 serde = "*"
 serde-transcode = "*"
 serde_derive = "*"
