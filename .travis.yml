@@ -3,7 +3,7 @@ sudo: false
 language: rust
 
 rust:
-  - beta
+  - nightly
 
 addons:
   apt:
