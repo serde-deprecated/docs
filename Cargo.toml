@@ -10,7 +10,7 @@ quasi = "*"
 serde = "*"
 serde-transcode = "*"
 serde_derive = "*"
-serde_json = { git = "https://github.com/serde-rs/json" }
+serde_json = "*"
 serde_test = "*"
 serde_xml = "*"
 syntex = "*"
