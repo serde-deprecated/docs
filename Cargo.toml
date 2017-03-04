@@ -5,13 +5,9 @@ authors = ["David Tolnay <dtolnay@gmail.com>"]
 publish = false
 
 [dependencies]
-aster = "*"
 erased-serde = "*"
-quasi = "*"
 serde = "*"
 serde-transcode = "*"
 serde_derive = "*"
 serde_json = "*"
 serde_test = "*"
-serde_xml = "*"
-syntex = "*"
