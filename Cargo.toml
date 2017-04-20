@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 serde = "*"
-serde-transcode = "*"
+#serde-transcode = "*"
 serde_bytes = "*"
 serde_derive = "*"
 serde_json = "*"
