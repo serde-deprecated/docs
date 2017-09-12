@@ -36,6 +36,9 @@ fi
 REV=$(git rev-parse --short HEAD)
 cd target/doc
 
+# Hide documentation of unimportant dependencies
+sed -i '/^searchIndex\["\(dtoa\|itoa\|num_traits\|quote\|syn\|synom\|unicode_xid\)"\]/s|^|//|' search-index.js
+
 echo "Committing docs to gh-pages branch"
 git init
 git remote add upstream "https://$GH_TOKEN@github.com/serde-rs/docs"
