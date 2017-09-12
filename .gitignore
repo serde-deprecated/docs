@@ -2,4 +2,6 @@
 /target/*
 !/target/doc
 /target/doc/*
+!/target/doc/.nojekyll
 !/target/doc/CNAME
+!/target/doc/index.html

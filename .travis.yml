@@ -5,25 +5,12 @@ language: rust
 rust:
   - beta
 
-addons:
-  apt:
-    packages:
-      - libcurl4-openssl-dev
-      - libelf-dev
-      - libdw-dev
-
-before_script:
-  - pip install 'travis-cargo<0.2' --user
-  - export PATH=$HOME/.local/bin:$PATH
-
 script:
-  - RUSTDOC=./rustdoc travis-cargo doc
+  - RUSTDOC=./rustdoc cargo doc
 
 after_success:
-  - mv Cargo.dummy.toml Cargo.toml
-  - travis-cargo doc-upload
+  - ./deploy.sh
 
 env:
   global:
-    - TRAVIS_CARGO_NIGHTLY_FEATURE=""
     - secure: fw39RZFYSX3gd7rNR/uGVYuCyYL6Eiv3u+4PLHnoskVloZVKpSS3vvEJ9xF8mYF+BQ/0T9QHHX/bKpCKQ1I+tX3m2c6d8oTxup3plog6DFIRTY2lfmzhAvFzRup45EGmQeyFo/7zjYd7YZsbAs3fiikcazwp0qJkiyWh3Sl5kErEakV0FbiGqU+kS4vx8YqhNMZFSHaN1bY5YbOcR8PkAT54z9qUbfQ3ihKMRfrl1iwmOqD0RjtbZEplNn5oMWXbRHOCiOf7fjZVYzn3FUeIUnXvKQ2cvdiWhVZQPFhCRb5oThIQs0WodDFgYrLfpE3toScoan93gz2mYllY0fh1tkkFj727pEdTNZtTPPcHiwRHWaUSj56d8Q0eG2Pob11JMRa36vsM4sybgKKG0Tq76P/YmSGJ/IA4bER2T+mkpiHlclZ0eCrOdRlpZ+LnVFn/tunpfRY7K8ac7TzBev9TeUdyoQUdvApcYue6lW+y94c9lPCWNtfBtY6wQfoB3qJkNTYSsrcH2xvWOPxmVXfItVAo6wFgVzexwicWo968gv0sA51kyRCQkIyp3U1XGGOTmKd7W38HxwIoFs64PS0cWO1/7dVqR+OlJ4iu1mqkd9eBb7aTqS62Es327rLV9g5/2lnDRXxQ6mz56SylRmtqJM9Y8Ay/EJPjMfSlLloyFRU=
