@@ -37,7 +37,9 @@ REV=$(git rev-parse --short HEAD)
 cd target/doc
 
 # Hide documentation of unimportant dependencies
-sed -i '/^searchIndex\["\(dtoa\|itoa\|num_traits\|quote\|syn\|synom\|unicode_xid\)"\]/s|^|//|' search-index.js
+for crate in dtoa itoa num_traits quote serde_docs syn synom unicode_xid; do
+    sed -i '/^searchIndex\["'$crate'"\]/s|^|//|' search-index.js
+done
 
 echo "Committing docs to gh-pages branch"
 git init
