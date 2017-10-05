@@ -37,7 +37,7 @@ REV=$(git rev-parse --short HEAD)
 cd target/doc
 
 # Hide documentation of unimportant dependencies
-for crate in dtoa itoa num_traits quote serde_docs syn synom unicode_xid; do
+for crate in dtoa itoa linked_hash_map num_traits quote serde_docs syn synom unicode_xid; do
     sed -i '/^searchIndex\["'$crate'"\]/s|^|//|' search-index.js
 done
 
