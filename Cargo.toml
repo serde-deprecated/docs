@@ -5,6 +5,7 @@ authors = ["David Tolnay <dtolnay@gmail.com>"]
 publish = false
 
 [dependencies]
+erased-serde = "*"
 serde = { version = "*", features = ["rc"] }
 serde-transcode = "*"
 serde_bytes = "*"
