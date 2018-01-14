@@ -6,7 +6,7 @@ rust:
   - beta
 
 script:
-  - RUSTDOC=./rustdoc cargo doc
+  - RUSTDOC=/home/travis/build/serde-rs/docs/rustdoc cargo doc
 
 after_success:
   - ./deploy.sh

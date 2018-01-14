@@ -1,3 +1,4 @@
 #!/bin/sh
 
-exec rustdoc "$@" --html-after-content analytics.js
+DIR=$(cd "$(dirname "$0")" && pwd)
+exec rustdoc "$@" --html-after-content "$DIR"/analytics.js
