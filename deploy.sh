@@ -41,13 +41,11 @@ hide=(
     dtoa
     itoa
     linked_hash_map
-    num_traits
     proc_macro2
     quote
     ryu
     serde_docs
     syn
-    synom
     unicode_xid
     yaml_rust
 )
