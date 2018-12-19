@@ -10,6 +10,6 @@ serde = { version = "*", features = ["rc"] }
 serde-transcode = "*"
 serde_bytes = "*"
 serde_derive = "*"
-serde_json = "*"
+serde_json = { version = "*", features = ["raw_value"] }
 serde_test = "*"
 serde_yaml = "*"
