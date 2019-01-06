@@ -3,7 +3,7 @@ sudo: false
 language: rust
 
 rust:
-  - beta
+  - nightly
 
 script:
   - RUSTDOC=/home/travis/build/serde-rs/docs/rustdoc cargo doc
