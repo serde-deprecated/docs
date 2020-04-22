@@ -50,8 +50,9 @@ hide=(
     yaml_rust
 )
 for crate in "${hide[@]}"; do
-    sed -i '/^searchIndex\["'$crate'"\]/s|^|//|' search-index.js
+    sed -i '/^"'$crate'"/d' search-index.js
 done
+sed -i -z 's/,\\\n}/\\\n}/' search-index.js
 
 echo "Committing docs to gh-pages branch"
 git init
