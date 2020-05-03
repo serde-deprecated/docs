@@ -1,0 +1,44 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "45 17 * * *"
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dtolnay/rust-toolchain@nightly
+      - run: cargo doc
+        env:
+          RUSTDOC: ${{github.workspace}}/rustdoc
+      - name: Prepare docs
+        working-directory: target/doc
+        run: |
+          # Hide documentation of unimportant dependencies
+          hide=(dtoa itoa linked_hash_map proc_macro2 quote ryu serde_docs syn unicode_xid yaml_rust)
+          for crate in "${hide[@]}"; do sed -i '/^"'$crate'"/d' search-index.js; done
+          sed -i -z 's/,\\\n}/\\\n}/' search-index.js
+      - name: Commit docs to gh-pages branch
+        working-directory: target/doc
+        run: |
+          REV=$(git rev-parse --short HEAD)
+          git init
+          git remote add upstream git@github.com:serde-rs/docs
+          git config user.name "Serde Docs"
+          git config user.email "docs@serde.rs"
+          git add -A .
+          git commit -qm "Documentation for ${{github.repository}}@${REV}"
+      - name: Push gh-pages to GitHub
+        working-directory: target/doc
+        env:
+          deploy_key: ${{secrets.DEPLOY_KEY}}
+        run: |
+          eval `ssh-agent`
+          ssh-add - <<< "$deploy_key"
+          git push -q upstream HEAD:refs/heads/gh-pages --force
