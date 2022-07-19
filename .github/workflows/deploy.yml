@@ -25,7 +25,7 @@ jobs:
         working-directory: target/doc
         run: |
           # Hide documentation of unimportant dependencies
-          hide=(dtoa itoa linked_hash_map proc_macro2 quote ryu serde_docs syn unicode_xid yaml_rust)
+          hide=(hashbrown indexmap itoa linked_hash_map proc_macro2 quote ryu serde_docs syn unicode_ident yaml_rust)
           for crate in "${hide[@]}"; do sed -i '/^"'$crate'"/d' search-index.js; done
           sed -i -z 's/,\\\n}/\\\n}/' search-index.js
 
