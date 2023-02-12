@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Transcode from one Serde format to another."><title>serde_transcode - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../static.files/ayu-a0090c8b1ced384f.css"><script src="../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-bfa4087bf2db080e.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../serde_transcode/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../serde_transcode/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate serde_transcode</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 1.1.1</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">serde_transcode</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/serde_transcode/lib.rs.html#1-309">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Transcode from one Serde format to another.</p>
+<p>This crate provides functionality to “transcode” from an arbitrary Serde
+<code>Deserializer</code> to an arbitrary Serde <code>Serializer</code> without needing to
+collect the entire input into an intermediate form in memory. For example,
+you could translate a stream of JSON data into a stream of CBOR data, or
+translate JSON into its pretty-printed form.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<p>Translate a JSON file to a pretty-printed version.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">extern crate </span>serde;
+<span class="kw">extern crate </span>serde_json;
+<span class="kw">extern crate </span>serde_transcode;
+
+<span class="kw">use </span>serde::Serialize;
+<span class="kw">use </span>serde_json::{Serializer, Deserializer};
+<span class="kw">use </span>std::io::{Read, Write, BufReader, BufWriter};
+<span class="kw">use </span>std::fs::File;
+
+<span class="kw">fn </span>main() {
+    <span class="kw">let </span>reader = BufReader::new(File::open(<span class="string">&quot;input.json&quot;</span>).unwrap());
+    <span class="kw">let </span>writer = BufWriter::new(File::create(<span class="string">&quot;output.json&quot;</span>).unwrap());
+
+    <span class="kw">let </span><span class="kw-2">mut </span>deserializer = Deserializer::from_reader(reader);
+    <span class="kw">let </span><span class="kw-2">mut </span>serializer = Serializer::pretty(writer);
+    serde_transcode::transcode(<span class="kw-2">&amp;mut </span>deserializer, <span class="kw-2">&amp;mut </span>serializer).unwrap();
+    serializer.into_inner().flush().unwrap();
+}</code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left"><a class="struct" href="struct.Transcoder.html" title="struct serde_transcode::Transcoder">Transcoder</a></div><div class="item-right docblock-short">A Serde transcoder.</div></div></div><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2><div class="item-table"><div class="item-row"><div class="item-left"><a class="fn" href="fn.transcode.html" title="fn serde_transcode::transcode">transcode</a></div><div class="item-right docblock-short">Transcodes from a Serde <code>Deserializer</code> to a Serde <code>Serializer</code>.</div></div></div></section></div></main><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82804814-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div id="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="serde_transcode" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (585f3eef2 2023-02-11)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>

@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["erased_serde","hashbrown","indexmap","itoa","proc_macro2","quote","ryu","serde","serde_bytes","serde_derive","serde_docs","serde_json","serde_test","serde_transcode","serde_yaml","syn","unicode_ident","unsafe_libyaml"];
